@@ -64,7 +64,7 @@ int ValidateUser(char username[], char password[]) {
     int n = 0;
 
     // for each line in /etc/passwd file do
-    while (n = GetLine(passwordFD, line)) {
+    while (n = GetLine(line)) {
 
         TokenizeLine(line);
 
@@ -87,14 +87,14 @@ int ValidateUser(char username[], char password[]) {
 
 }
 
-int GetLine(int passFD, char * buffer) {
+int GetLine(char *buffer) {
     int i = 0;
     char temp[5] = "";
 
     // Clear the buffer
     strcpy(buffer, "");
     while (strcmp(temp, "\n") != 0) {
-        if (read(passFD, temp, 1) != 0) {
+        if (read(passwordFD, temp, 1) > 0) {
             strcat(buffer, temp);
             i++;
         }
@@ -105,16 +105,35 @@ int GetLine(int passFD, char * buffer) {
     return i;
 }
 
-int TokenizeLine(char *line) {
-    char *cp = line;
-    char *filler[64];
-    int i = 0;
+// int TokenizeLine(char *line) {
+//     char *cp = line;
+//     char *filler[64];
+//     int i = 0;
 
-    while (*cp != 0) {
-        while (*cp != ':') {
-            strcat(passwordFileLine[i], *cp);
-        }
-        i++;
-        *cp++;
-    }
+//     while (*cp != 0) {
+//         while (*cp != ':') {
+//             strcat(passwordFileLine[i], *cp);
+//         }
+//         i++;
+//         *cp++;
+//     }
+// }
+
+int TokenizeLine(char *line)
+{
+  char *cp = line; 
+  argc = 0;
+  while (*cp != 0){
+    while (*cp == ':')  *cp++ = 0;
+    if (*cp != 0)// skip over blanks // token start
+      passwordFileLine[argc++] = cp; // pointed by argv[ ]
+    while (*cp != ':' && *cp != 0) // scan token chars
+      cp++;
+    if (*cp != 0)
+      *cp = 0;
+    else // end of token
+      break; // end of line
+    cp++;// continue scan
+  } //end outer while
+  passwordFileLine[argc] = 0; // argv[argc]=0
 }
