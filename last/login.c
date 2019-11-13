@@ -2,7 +2,8 @@
 #include "ucode.c"
 
 int in, out, err, passwordFD, uid, gid;
-char username[128], password[128], homeDirectory[128], userProgram[128];
+char username[128], password[128];
+char *passwordFileLine[6];
 
 main(int argc, char *argv[])
 {
@@ -58,49 +59,62 @@ int ValidateUser(char username[], char password[]) {
         return 0;
     }
 
-    char *token, *delimeter = ":\n";
-    char buffer[1024];
-
-    // Read the password file 
-    read(passwordFD, buffer, 1024);
-
-    // Get first token (user name)
-    token = strtok(buffer, delimeter);
+    char *token;
+    char line[256];
+    int n = 0;
 
     // for each line in /etc/passwd file do
-    while (token != 0) {
-        if (strcmp(token, username) == 0) {
+    while (n = GetLine(passwordFD, line)) {
 
-            // Get the password
-            token = strtok(0, delimeter);
+        TokenizeLine(line);
 
-            // If valid account
-            if (strcmp(token, password) == 0) {
+        // If it is a match
+        if (strcmp(username, passwordFileLine[0]) == 0 && strcmp(password, passwordFileLine[1]) == 0) {
 
-                // change uid, gid to user's uid, gid; //chuid()
-                uid = atoi(strtok(0, delimeter));
-                gid = atoi(strtok(0, delimeter));
-                
-                // Move past the user's full name
-                strtok(0, delimeter);
-
-                // Get the user home directory and the program name
-                strcpy(homeDirectory, strtok(0, delimeter));
-                strcpy(userProgram, strtok(0, delimeter));
-
-                // Close the password file and return success
-                close(passwordFD);
-                return 1;
-            }
+            uid = atoi(strtok(0, passwordFileLine[2]));
+            gid = atoi(strtok(0, passwordFileLine[3]));
+    
+            // Close password file and return success
+            close(passwordFD);
+            return 1;
+            
         }
-
-        // Get the username on the next line
-        token = strtok(0, delimeter);
-
     }
 
     // Close the password file and return failure
     close(passwordFD);
     return 0;
 
+}
+
+int GetLine(int passFD, char * buffer) {
+    int i = 0;
+    char temp[5] = "";
+
+    // Clear the buffer
+    strcpy(buffer, "");
+    while (strcmp(temp, "\n") != 0) {
+        if (read(passFD, temp, 1) != 0) {
+            strcat(buffer, temp);
+            i++;
+        }
+        else {
+            break;
+        }
+    }
+    return i;
+}
+
+int TokenizeLine(char *line) {
+    char *cp = line;
+    char *filler[64];
+    int i = 0;
+
+    while (*cp != 0) {
+        while (*cp != ':') {
+            strcat(passwordFileLine[i], *cp);
+        }
+        i++;
+        *cp++;
+    }
 }
