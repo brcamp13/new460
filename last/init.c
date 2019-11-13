@@ -5,7 +5,7 @@ int parent() {
     int pid, status;
     while (1) {
         
-        printf("Brandon init : wait for ZOMBIE child\n");
+        printf("BRANDON init : wait for ZOMBIE child\n");
         pid = wait(&status);
         // If console login process died
         if (pid == console) {
@@ -18,7 +18,7 @@ int parent() {
                 exec("login /dev/tty0"); // new console login process
             }
         }
-        printf("Brandon INIT: I just buried an orphan child proc %d\n", pid);
+        printf("BRANDON INIT: I just buried an orphan child proc %d\n", pid);
     }
 }
 
