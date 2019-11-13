@@ -15,7 +15,7 @@ int parent() {
                 continue;
             }
             else {
-                exec("login /dev/tty0") // new console login process
+                exec("login /dev/tty0"); // new console login process
             }
         }
         printf("Brandon INIT: I just buried an orphan child proc %d\n", pid);
@@ -37,6 +37,6 @@ main() {
     else {
         // Child: exec to login on tty0
         printf("Child doing login\n");
-        exec("login /dev/tty0")
+        exec("login /dev/tty0");
     }
 }
