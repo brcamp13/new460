@@ -36,10 +36,10 @@ main(int argc, char *argv[])
             chuid(uid, gid);
 
             // change cwd to user's home DIR // chdir()
-            chdir(homeDirectory);
+            chdir(passwordFileLine[5]);
 
             // exec to program in user account // exec()
-            exec(userProgram);
+            exec(passwordFileLine[6]);
         }
         else {
             printf("LOGIN FAILED\n");
