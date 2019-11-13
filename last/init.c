@@ -36,6 +36,7 @@ main() {
     }
     else {
         // Child: exec to login on tty0
+        printf("Child doing login\n");
         exec("login /dev/tty0")
     }
 }
