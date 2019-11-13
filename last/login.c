@@ -71,8 +71,8 @@ int ValidateUser(char username[], char password[]) {
         // If it is a match
         if (strcmp(username, passwordFileLine[0]) == 0 && strcmp(password, passwordFileLine[1]) == 0) {
 
-            uid = atoi(strtok(0, passwordFileLine[2]));
-            gid = atoi(strtok(0, passwordFileLine[3]));
+            uid = atoi(passwordFileLine[2]);
+            gid = atoi(passwordFileLine[3]);
     
             // Close password file and return success
             close(passwordFD);
