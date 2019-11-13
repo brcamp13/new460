@@ -2,7 +2,7 @@
 #include "ucode.c"
 
 int in, out, err, passwordFD, uid, gid;
-char name[128], password[128], homeDirectory[128], userProgram[128];
+char username[128], password[128], homeDirectory[128], userProgram[128];
 
 main(int argc, char *argv[])
 {
@@ -23,13 +23,13 @@ main(int argc, char *argv[])
 
         // Printf("login") gets(name);
         printf("Login : ");
-        gets(name);
+        gets(username);
 
         // printf("password: ") gets (password);
         printf("Password : ");
         gets(password);
 
-        if (ValidateUser(name, password) == 1) {
+        if (ValidateUser(username, password) == 1) {
 
             // change uid, gid to user's uid, gid; //chuid()
             chuid(uid, gid);
