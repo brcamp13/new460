@@ -109,7 +109,8 @@ int GetLine(char *buffer) {
 int TokenizeLine(char *line)
 {
 
-    int i, j = 0;
+    int i = 0;
+    int j = 0;
 
     while (*line) {
 
