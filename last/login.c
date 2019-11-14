@@ -39,7 +39,10 @@ main(int argc, char *argv[])
             chdir(passwordFileLine[5]);
 
             // exec to program in user account // exec()
-            exec(passwordFileLine[6]);
+            char userProgram[64];
+            strcpy(userProgram, "/mnt/bin/");
+            strcat(userProgram, passwordFileLine[6]);
+            exec(userProgram);
         }
         else {
             printf("LOGIN FAILED\n");
