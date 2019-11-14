@@ -3,7 +3,7 @@
 
 int in, out, err, passwordFD, uid, gid;
 char username[128], password[128];
-char *tokens[7][64];
+char tokens[7][64];
 
 main(int argc, char *argv[])
 {
@@ -112,7 +112,7 @@ int TokenizeLine(char *line)
     int i = 0;
     int j = 0;
 
-    while (*line) {
+    while (*line != 0) {
 
         if (*line != ':') {
 
