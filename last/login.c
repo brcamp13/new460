@@ -40,7 +40,7 @@ main(int argc, char *argv[])
 
             // exec to program in user account // exec()
             char userProgram[64];
-            strcpy(userProgram, "/mnt/bin/");
+            strcpy(userProgram, "bin/");
             strcat(userProgram, passwordFileLine[6]);
             exec(userProgram);
         }
