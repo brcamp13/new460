@@ -126,9 +126,9 @@ int TokenizeLine(char *line)
             
         }
 
-        line++;
+        *line++;
 
-        }
+    }
 
     tokens[i][j] = 0;
 
