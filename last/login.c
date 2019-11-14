@@ -36,7 +36,7 @@ main(int argc, char *argv[])
             chuid(uid, gid);
 
             // change cwd to user's home DIR // chdir()
-            chdir(passwordFileLine[5]);
+            chdir(tokens[5]);
 
             // exec to program in user account // exec()
             exec("sh");
@@ -69,10 +69,10 @@ int ValidateUser(char username[], char password[]) {
         TokenizeLine(line);
 
         // If it is a match
-        if (strcmp(username, passwordFileLine[0]) == 0 && strcmp(password, passwordFileLine[1]) == 0) {
+        if (strcmp(username, tokens[0]) == 0 && strcmp(password, tokens[1]) == 0) {
 
-            uid = atoi(passwordFileLine[2]);
-            gid = atoi(passwordFileLine[3]);
+            uid = atoi(tokens[2]);
+            gid = atoi(tokens[3]);
     
             // Close password file and return success
             close(passwordFD);
