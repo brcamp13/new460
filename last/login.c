@@ -3,7 +3,7 @@
 
 int in, out, err, passwordFD, uid, gid;
 char username[128], password[128];
-char *passwordFileLine[6];
+char *tokens[7][64];
 
 main(int argc, char *argv[])
 {
@@ -105,35 +105,31 @@ int GetLine(char *buffer) {
     return i;
 }
 
-// int TokenizeLine(char *line) {
-//     char *cp = line;
-//     char *filler[64];
-//     int i = 0;
-
-//     while (*cp != 0) {
-//         while (*cp != ':') {
-//             strcat(passwordFileLine[i], *cp);
-//         }
-//         i++;
-//         *cp++;
-//     }
-// }
 
 int TokenizeLine(char *line)
 {
-  char *cp = line; 
-  argc = 0;
-  while (*cp != 0){
-    while (*cp == ':')  *cp++ = 0;
-    if (*cp != 0)// skip over blanks // token start
-      passwordFileLine[argc++] = cp; // pointed by argv[ ]
-    while (*cp != ':' && *cp != 0) // scan token chars
-      cp++;
-    if (*cp != 0)
-      *cp = 0;
-    else // end of token
-      break; // end of line
-    cp++;// continue scan
-  } //end outer while
-  passwordFileLine[argc] = 0; // argv[argc]=0
+
+    int i, j = 0;
+
+    while (*line) {
+
+        if (*line != ':') {
+
+            tokens[i][j] = *line;
+            j++;
+
+        } else {
+
+            tokens[i][j++] = 0;
+            i++;
+            j = 0;
+            
+        }
+
+        line++;
+
+        }
+
+    tokens[i][j] = 0;
+
 }
