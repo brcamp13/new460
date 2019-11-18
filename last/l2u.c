@@ -22,6 +22,8 @@ int main(int arc, char *argv[]) {
                 buf[j] = toUpper(buf[j]);
                 j++;
             }
+            prints(buf);
+            return 0;
         }
     }
     else {
