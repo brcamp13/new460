@@ -19,9 +19,9 @@ typedef unsigned char   u8;
 typedef unsigned short u16;
 typedef unsigned int   u32;
 
+#include "string.h"
 #include "uio.c"
 #include "crt0.c"
-#include "string.h"
 
 int pid;
 char line[64], pathname[32], i2[32], i3[32];
@@ -30,7 +30,7 @@ int nk;
 #define EOF -1
 extern char cr;
 
-void putchar(const char c){ }
+// void putchar(const char c){ }
 
 int getc()
 {
@@ -510,32 +510,32 @@ int eatpath(char *line, char *name[ ])
   return n;
 }
 
-int strcasecmp(char *s1, char *s2)
-{
-  char *cp;
+// int strcasecmp(char *s1, char *s2)
+// {
+//   char *cp;
 
-  char t1[64], t2[64];
-  strcpy(t1, s1); 
-  strcpy(t2,s2);
+//   char t1[64], t2[64];
+//   strcpy(t1, s1); 
+//   strcpy(t2,s2);
 
-  //printf("t1=%s  t2=%s  ", t1, t2);
+//   //printf("t1=%s  t2=%s  ", t1, t2);
 
-  cp = t1;
+//   cp = t1;
 
-  while(*cp){  // all to lower case
-    if (('A' <= *cp) && (*cp <= 'Z')){
-      *cp = *cp - 'A' + 'a';
-    }
-    cp++;
-  }
-  //printf("t1=%s  ", t1);
-  cp = t2;
-  while(*cp){  // all to upper case
-    if (('A' <= *cp) && (*cp <= 'Z')){
-      *cp = *cp - 'A' + 'a';
-    }
-    cp++;
-  }
-  //printf("t2=%s\n", t1, t2);
-  return strcmp(t1, t2);
-}
+//   while(*cp){  // all to lower case
+//     if (('A' <= *cp) && (*cp <= 'Z')){
+//       *cp = *cp - 'A' + 'a';
+//     }
+//     cp++;
+//   }
+//   //printf("t1=%s  ", t1);
+//   cp = t2;
+//   while(*cp){  // all to upper case
+//     if (('A' <= *cp) && (*cp <= 'Z')){
+//       *cp = *cp - 'A' + 'a';
+//     }
+//     cp++;
+//   }
+//   //printf("t2=%s\n", t1, t2);
+//   return strcmp(t1, t2);
+// }

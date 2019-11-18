@@ -125,7 +125,7 @@ void gets(char *s)
     *s = 0;
 }
 ********/
-extern int strlen(const char *);
+// extern int strlen(const char *);
 void print2f(char *s)
 {
   write(2, s, (int)strlen(s));
