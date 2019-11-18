@@ -1,5 +1,14 @@
 #include "ucode.c"
 
+// If character is lowercase, change it to upper case
+char toUpper(char character) {
+
+    if (character >= 'a' && character <= 'z') {
+        character = character - 32;
+    }
+
+    return character;
+}
 
 int main(int arc, char *argv[]) {
 
@@ -36,14 +45,4 @@ int main(int arc, char *argv[]) {
     }
 
     return 0;
-}
-
-// If character is lowercase, change it to upper case
-char toUpper(char character) {
-
-    if (character >= 'a' && character <= 'z') {
-        character = character - 32;
-    }
-
-    return character;
 }
