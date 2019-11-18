@@ -8,7 +8,7 @@ int main(int arc, char *argv[]) {
     // If there are no files specified (use standard in)
     if (argc == 1) {
         while (gets(buf)) {
-            for (int i = 0; i < 256; i++) {
+            for(int i = 0; i < 256; i++) {
                 buf[i] = toUpper(buf[i]);
             }
         }
@@ -21,7 +21,7 @@ int main(int arc, char *argv[]) {
 
 
         while (n = read(source, buf, 256)) {
-            for (int i = 0; i < strlen(buf); i++) {
+            for(int i = 0; i < strlen(buf); i++) {
                 buf[i] = toUpper(buf[i]);
             }
             write(destination, buf, n);
