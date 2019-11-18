@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
         while (1) {
             gets(fileBuf);
             prints(fileBuf);
+            return 0;
         }
     }
     else {
