@@ -9,6 +9,7 @@ arm-none-eabi-ld -T u.ld us.o $1.o eoslib -Ttext=0x80000000 -o $1
 
 sudo mount -o loop sdimage /mnt
 sudo cp -av $1 /mnt/bin
+sudo cp test /mnt/user/buster
 sudo ls -l /mnt/bin
 sudo cat /mnt/etc/passwd
 sudo umount /mnt
