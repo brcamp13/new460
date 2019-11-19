@@ -1,37 +1,108 @@
 #include "ucode.c"
 
-STAT utat, *sp;
-int fd, n;
-DIR *dp;
-char f[32], cwdname[64], file[64], buf[1024];
-char *cp;
+char *t1 = "xwrxwrxwr-------";
+char *t2 = "----------------";
+struct stat mystat, *sp;
+
+int ls_file(char *fname) {
+
+    struct stat fstat, *sp = &fstat;
+
+    int r, i;
+    char sbuf[4096];
+
+    r = stat(fname, sp);
+
+    // Print "d" if directory, "-" otherwise
+    if ((sp->st_mode & 0040000) == 0040000) {
+        prints("d");
+    }
+    else {
+        prints("-");
+    }
+
+    // Print permission bits
+    i = 8;
+    while (i >= 0) {
+        if (sp->st_mode & (1 << i)) {
+            mputc(t1[i]);
+        }
+        else {
+            mputc(t2[i]);
+        }
+    }
+
+    printf(" %d", sp->st_nlink); // Link count
+    printf(" %d", sp->st_uid); // UID
+    printf(" %d", sp->st_gid); // GID
+    printf(" %d", sp->st_size); // File size
+    printf(" %s\n\r", fname); // File name
+
+}
+
+int ls_dir(char *dname, char *cwd) {
+    
+    int n, fd;
+    char buf[1024], fname[128];
+    char *cp;
+    DIR *dp;
+
+    fd = open(argv[1], O_RDONLY);
+    n = read(fd, buf, 1024);
+    cp = buf;
+    dp = (DIR*)cp;
+
+    while (cp < buf + 1024) {
+        strcpy(fname, dp->name);
+        strcat(fname, "\0");
+        ls_file(fname);
+
+        cp += dp->rec_len;
+        dp = (DIR*)cp;
+    }
+
+    close(fd);
+}
 
 
 int main(int argc, char *argv) {
 
-    sp = &utat;
-    int fileStat;
+    struct stat mystat, *sp;
+    int r; 
+    int fd;
+    char *s;
+    char cwd[1024], fileName[128];
 
-    printf("==========Brandon LS ==========");
+    s = argv[1];
 
     // Ls the current directory as nothing specified
     if (argc == 1) {
-        strcpy(file, "./");
-    }
-    else { // Ls the filename/dirname that was given by user
-        strcpy(file, argv[1]);
+        strcpy(fileName, "./");
     }
 
-    fileStat = stat(file, sp);
+    sp = &mystat;
+    if ((r = stat(s, sp)) < 0) {
+        printf("Error opening file lol\n");
+        exit(1);
+    }
+
+    strcpy(fileName, s);
+
+    if (s[0] != '/') { // Filename relative to CWD
+        getcwd(cwd);
+        strcpy(fileName, cwd);
+        strcat(fileName, "/");
+        strcat(fileName, s); // Construct CWD/filename
+    }
 
     // If the mode is a file, then ls file
     if ((sp->st_mode & 0100000) == 0100000) {
-        ls_file(sp, file, file);
+        ls_file(fileName);
     }
     else {
         // Otherwise, make sure that it's a dir and ls the dir
         if ((sp->st_mode & 0040000) == 0040000) {
-            ls_dir(sp, file);
+            ls_dir(fileName, cwd);
         }
     }
 }
