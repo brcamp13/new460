@@ -109,11 +109,13 @@ int main(int argc, char *argv) {
 
     // If the mode is a file, then ls file
     if ((sp->st_mode & 0100000) == 0100000) {
+        prints("boutta ls a file lmao\n");
         ls_file(fileName);
     }
     else {
         // Otherwise, make sure that it's a dir and ls the dir
         if ((sp->st_mode & 0040000) == 0040000) {
+            prints("boutta ls a dir dood\n");
             ls_dir(fileName, cwd);
         }
     }
