@@ -94,7 +94,7 @@ int main(int argc, char *argv) {
     sp = &mystat;
     
     if ((r = stat(s, sp)) < 0) {
-        printf("Error opening file lol\n");
+        prints("Error opening file lol\n");
         exit(1);
     }
 
