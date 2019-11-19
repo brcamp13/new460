@@ -82,7 +82,7 @@ int main(int argc, char *argv) {
     char *s;
     char cwd[1024], fileName[128];
 
-    printf("DOING LS!!!!!!!!!!!!!!\n");
+    prints("DOING LS!!!!!!!!!!!!!!\n");
 
     s = argv[1];
 
