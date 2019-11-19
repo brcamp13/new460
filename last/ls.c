@@ -40,7 +40,7 @@ int ls_file(char *fname) {
 
 }
 
-int ls_dir(char *dname, char *cwd) {
+int ls_dir(char *dname) {
     
     int n, fd;
     char buf[1024], fname[128], temp[256];
@@ -55,8 +55,9 @@ int ls_dir(char *dname, char *cwd) {
         cp = buf;
         dp = (DIR*)cp;
 
+        prints("HELLLLO");
+
         while (cp < &buf[1024]) {
-            prints("HELLLLO");
             strncpy(temp, dp->name, dp->name_len);
             fname[dp->name_len] = 0;
 
@@ -117,7 +118,7 @@ int main(int argc, char *argv) {
         // Otherwise, make sure that it's a dir and ls the dir
         if ((sp->st_mode & 0040000) == 0040000) {
             prints("boutta ls a dir dood\n");
-            ls_dir(fileName, cwd);
+            ls_dir(fileName);
         }
     }
 }
