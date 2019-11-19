@@ -30,6 +30,7 @@ int ls_file(char *fname) {
         else {
             mputc(t2[i]);
         }
+        i--;
     }
 
     printf(" %d", sp->st_nlink); // Link count
