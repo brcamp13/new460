@@ -77,10 +77,11 @@ int main(int argc, char *argv) {
 
     // Ls the current directory as nothing specified
     if (argc == 1) {
-        strcpy(fileName, "./");
+        s = "./";
     }
 
     sp = &mystat;
+    
     if ((r = stat(s, sp)) < 0) {
         printf("Error opening file lol\n");
         exit(1);
