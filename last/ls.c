@@ -43,24 +43,32 @@ int ls_file(char *fname) {
 int ls_dir(char *dname, char *cwd) {
     
     int n, fd;
-    char buf[1024], fname[128];
+    char buf[1024], fname[128], temp[32];
     char *cp;
     DIR *dp;
 
     fd = open(argv[1], O_RDONLY);
-    n = read(fd, buf, 1024);
-    cp = buf;
-    dp = (DIR*)cp;
 
-    while (cp < buf + 1024) {
-        strcpy(fname, dp->name);
-        strcat(fname, "\0");
-        ls_file(fname);
+
+    while( (n = read(fd, buf, 1024))) {
+
+        cp = buf;
+        dp = (DIR*)cp;
+
+        while (cp < &buf[1024]) {
+            strncpy(fname, dp->name, dp->name_len);
+            fname[dp->name_len] = 0;
+
+            strcpy(temp, dname);
+            strcat(temp, "/");
+            strcat(temp, fname);
+
+            ls_file(fname);
+        }
 
         cp += dp->rec_len;
         dp = (DIR*)cp;
     }
-
     close(fd);
 }
 
