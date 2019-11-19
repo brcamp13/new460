@@ -67,10 +67,10 @@ int ls_dir(char *dname) {
             strcat(temp, dp->name);
 
             ls_file(temp);
-        }
 
-        cp += dp->rec_len;
-        dp = (DIR*)cp;
+            cp += dp->rec_len;
+            dp = (DIR*)cp;
+        }
     }
 
     close(fd);
