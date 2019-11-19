@@ -69,6 +69,7 @@ int ls_dir(char *dname, char *cwd) {
         cp += dp->rec_len;
         dp = (DIR*)cp;
     }
+
     close(fd);
 }
 
@@ -80,6 +81,8 @@ int main(int argc, char *argv) {
     int fd;
     char *s;
     char cwd[1024], fileName[128];
+
+    printf("DOING LS!!!!!!!!!!!!!!\n");
 
     s = argv[1];
 
