@@ -47,10 +47,10 @@ int ls_dir(char *dname) {
     char *cp;
     DIR *dp;
 
-    fd = open(argv[1], O_RDONLY);
+    fd = open(dname, O_RDONLY);
 
 
-    while( (n = read(fd, buf, 1024))) {
+    while((n = read(fd, buf, 1024))) {
 
         cp = buf;
         dp = (DIR*)cp;
