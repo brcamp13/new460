@@ -17,7 +17,58 @@ int containsPipe(char *command) {
 }
 
 int doPipe(char *command) {
+    int pid, pd[2];
+    int i = 0, j = 0;
+    char head[256], tail[256], temp[256];
+    char *token, *command1, *command2;
 
+    // Preserve the original command string
+    strcpy(temp, command);
+
+    // Get first command (head)
+    while (temp[i] != '|') {
+        head[i] = temp[i];
+        i++;
+    }
+    head[i - 1] = 0;
+
+    // Get second command (tail)
+    i += 2;
+    while (temp[i] != 0 ) {
+        tail[j] = temp[i];
+        j++;
+        i++;
+    }
+    tail[j] = 0;
+
+    pipe(pd); // Create a pipe: pd[0]=READ, pd[1]=WRITE
+    pid = fork();
+
+    // If parent process
+    if (pid) {
+        close(pd[1]); // Close pipe WRITE end
+        dup2(pd[0], 0); // redirect stdin to pipe READ end
+
+        // Check if there is a multi-pipe (pipes recursively execute right to left if so)
+        if (containsPipe(tail) == 1) {
+            doPipe(tail);
+        }
+        else {
+            // Check if there is a redirect as there are no multi-pipes
+            doRedirect(tail, getRedirectType(tail));
+            exec(tail);
+        }
+    }
+    else { // If child process as pipe reader
+        close(pd[0]); // close pipe read end
+        dup2(pd[1], 1); // redirect stdout to pipe write end
+
+        // Check if there is a redirect
+        doRedirect(head, getRedirectType(head));
+        exec(head);
+    }
+
+    return;
 }
 
 // Returns 1 if >>, 2 if >, 3 if <, 0 if none
