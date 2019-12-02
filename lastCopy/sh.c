@@ -1,25 +1,73 @@
 #include "ucode.c"
 
+int status;
+
+
+int containsPipe(char *command) {
+    
+}
+
+int doPipe(char *command) {
+
+}
+
+int getRedirectType(char *command) {
+
+}
+
+int doRedirect(char *command, int redirectType) {
+
+}
+
 int main(int argc, char *argv[]) {
 
-    char cmd1[32];
-    char cmd2[32];
+    char command[256], temp[256];
     int pid;
+    char *token;
 
-    // From book, do_pipe algorithm:
-    int pid, pd[2];
-    pipe(pd); // Create a pipe: pd[0] = READ, pd[1] = WRITE
-    pid = fork(); // Fork a child to share the pipe
+    while(1) {
+        printf("~~~~~~~~~~~~~~~BRANDON SHELL~~~~~~~~~~~~~~~~~~~");
+        printf("Enter a command: ");
+        gets(command);
 
-    if (pid) {  // Parent as pipe READER
-        close(pd[1]); // Close pipe WRITE end
-        dup2(pd[0], 0); // Redirect stdin to pipe READ end
-        exec(cmd2);
+        // If the user pressed enter, cycle through the loop
+        if (command[0] == 0 || command[0] == ' ') {
+            continue;
+        }
+
+        // Preserve the command
+        strcpy(temp, command);
+
+        token = strtok(temp, " ");
+
+        if (strcmp("cd", token) == 0) {
+            token = strtok(0, " ");
+            chdir(token);
+        }
+        else { 
+            pid = fork();
+
+            if (pid < 0) {
+                printf("No child processes available. Exiting....\n");
+                exit(1);
+            }
+
+            if (pid) {
+                // Parent sh waits for the child to die
+                pid = wait(&status);
+            } 
+            else {
+                printf("Command = %s \n", command);
+
+                if (containsPipe(command) == 0) {
+                    doRedirect(command, getRedirectType(command));
+                    exec(command);
+                }
+                else {
+                    printf("DOING PIPE\n");
+                    doPipe(command);
+                }
+            }
+        }
     }
-    else {  // Child: as pipe WRITER
-        close(pd[0]); // close pipe READ end
-        dup2(pd[1], 1); // redirect stdout to pipe write end
-        exec(cmd1);
-    }
-
 }
