@@ -5,7 +5,7 @@ int status;
 
 int containsPipe(char *command) {
     char *c = command;
-    
+
     while (*c) {
         if (*c == '|') {
             return 1;
@@ -20,8 +20,28 @@ int doPipe(char *command) {
 
 }
 
+// Returns 1 if >>, 2 if >, 3 if <, 0 if none
 int getRedirectType(char *command) {
+    char *c = command;
+    
+    while (*c) {
+        if (*c == '>') {
+            *c++;
+            if (*c == '>') {
+                return 1;
+            }
 
+            return 2;
+        }
+
+        if (*c == '<') {
+            return 3;
+        }
+
+        *c++;
+    }
+
+    return 0;
 }
 
 int doRedirect(char *command, int redirectType) {
