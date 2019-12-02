@@ -44,8 +44,86 @@ int getRedirectType(char *command) {
     return 0;
 }
 
-int doRedirect(char *command, int redirectType) {
+void doRedirect(char *command, int redirectType) {
 
+    int i, j, k;
+    int fd;
+    char temp[256], cmd[256], fileLocation[256];
+
+    // Preserve the original command string
+    strcpy(temp, command);
+
+    // Appending to existing file
+    if (redirectType == 1) {
+
+        // Get the command
+        for (i = 0; temp[i] != '>'; i++) {
+            cmd[i] = temp[i]
+        }
+        command[i-1] = '\0';
+
+        // Get the file name/location
+        j = i + 3;
+        for (k = 0; j < strlen(command); k++) {
+            fileLocation[k] = temp[j];
+            j++;
+        }
+        fileLocation[k] = '\0';
+
+        fd = open(fileLocation, O_APPEND | O_WRONLY | O_CREAT);
+        dup2(fd, 1); // Redirect stdout to file pointed to by fd
+        exec(command);
+    }
+
+    // Creating new file
+    if (redirectType == 2) {
+
+        // Get the command
+        for (i = 0; temp[i] != '>'; i++) {
+            cmd[i] = temp[i]
+        }
+        command[i-1] = '\0';
+
+        // Get the file name/location
+        j = i + 2;
+        for (k = 0; j < strlen(command); k++) {
+            fileLocation[k] = temp[j];
+            j++;
+        }
+        fileLocation[k] = '\0';
+
+        fd = open(fileLocation, O_WRONLY | O_CREAT);
+        dup2(fd, 1); // Redirect stdout to file pointed to by fd
+        exec(command);
+    }
+
+    // Reading input from file
+    if (redirectType == 3) {
+
+        // Get the command
+        for (i = 0; temp[i] != '>'; i++) {
+            cmd[i] = temp[i]
+        }
+        command[i-1] = '\0';
+
+        // Get the file name/location
+        j = i + 3;
+        for (k = 0; j < strlen(command); k++) {
+            fileLocation[k] = temp[j];
+            j++;
+        }
+        fileLocation[k] = '\0';
+
+        fd = open(fileLocation, O_RDONLY);
+        dup2(fd, 0); // Redirect stdin to file pointed to by fd
+        exec(command);
+    }
+
+    // No redirect
+    if (redirectType == 0) {
+        printf("Redirect not found in command\n");
+        return;
+    }
 }
 
 int main(int argc, char *argv[]) {
