@@ -4,7 +4,16 @@ int status;
 
 
 int containsPipe(char *command) {
+    char *c = command;
     
+    while (*c) {
+        if (*c == '|') {
+            return 1;
+        }
+        *c++;
+    }
+
+    return 0;
 }
 
 int doPipe(char *command) {
