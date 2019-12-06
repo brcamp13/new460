@@ -2,6 +2,7 @@
 
 int status;
 
+void doRedirect(char *command, int redirectType);
 
 int containsPipe(char *command) {
     char *c = command;
