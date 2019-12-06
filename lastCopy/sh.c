@@ -1,8 +1,9 @@
 #include "ucode.c"
-#include <string.h>
+
 
 int status;
 
+char *strtok(char *__str, const char *__sep);
 void doRedirect(char *command, int redirectType);
 
 int containsPipe(char *command) {
