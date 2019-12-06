@@ -2,8 +2,10 @@
 
 
 int status;
+char toks[7][64];
 
 void doRedirect(char *command, int redirectType);
+
 
 int containsPipe(char *command) {
     char *c = command;
@@ -179,6 +181,35 @@ void doRedirect(char *command, int redirectType) {
     }
 }
 
+int Tokenize(char *line)
+{
+
+    int i = 0;
+    int j = 0;
+
+    while (*line != 0) {
+
+        if (*line != ':') {
+
+            toks[i][j] = *line;
+            j++;
+
+        } else {
+
+            toks[i][j++] = 0;
+            i++;
+            j = 0;
+            
+        }
+
+        *line++;
+
+    }
+
+    toks[i][j] = 0;
+
+}
+
 int main(int argc, char *argv[]) {
 
     char command[256], temp[256];
@@ -199,10 +230,11 @@ int main(int argc, char *argv[]) {
         // Preserve the command
         strcpy(temp, command);
 
-        token = strtok(temp, " ");
+        Tokenize(temp);
+        token = toks[0];
 
         if (strcmp("cd", token) == 0) {
-            token = strtok(0, " ");
+            token = toks[1];
             chdir(token);
         }
         else { 
