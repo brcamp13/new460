@@ -3,7 +3,6 @@
 
 int status;
 
-char *strtok(char *__str, const char *__sep);
 void doRedirect(char *command, int redirectType);
 
 int containsPipe(char *command) {
@@ -185,6 +184,7 @@ int main(int argc, char *argv[]) {
     char command[256], temp[256];
     int pid;
     char *token;
+    char *strtok(char *__str, const char *__sep);
 
     while(1) {
         printf("~~~~~~~~~~~~~~~BRANDON SHELL~~~~~~~~~~~~~~~~~~~");
