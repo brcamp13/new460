@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
 
     // Open source and destination FDs
     source = open(argv[1], O_RDONLY);
-    destination = open(argv[2], O_WRONLY);
+    destination = open(argv[2], O_WRONLY | O_CREAT);
 
     // Read 256 bytes from source, write 256 bytes to destination
     while (n = read(source, buf, 256)) {

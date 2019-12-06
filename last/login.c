@@ -12,9 +12,9 @@ main(int argc, char *argv[])
     close(1);
 
     // Open   argv[1] 3 times as  in(0), out(1), err(2)
-    in = open(argv[1], O_RDONLY);
-    out = open(argv[1], O_WRONLY);
-    err = open(argv[1], O_WRONLY);
+    in = open(argv[1], 0);
+    out = open(argv[1], 1);
+    err = open(argv[1], 2);
 
     // settty(argv[1]) set tty name string in proc.tty
     settty(argv[1]);

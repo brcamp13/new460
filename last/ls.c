@@ -56,8 +56,6 @@ int ls_dir(char *dname) {
         cp = buf;
         dp = (DIR*)cp;
 
-        prints("HELLLLO");
-
         while (cp < &buf[1024]) {
             strncpy(temp, dp->name, dp->name_len);
             fname[dp->name_len] = 0;
