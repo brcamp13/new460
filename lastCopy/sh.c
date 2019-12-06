@@ -1,4 +1,5 @@
 #include "ucode.c"
+#include <string.h>
 
 int status;
 
