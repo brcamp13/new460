@@ -156,7 +156,7 @@ void doRedirect(char *command, int redirectType) {
     if (redirectType == 3) {
 
         // Get the command
-        for (i = 0; temp[i] != '>'; i++) {
+        for (i = 0; temp[i] != '<'; i++) {
             cmd[i] = temp[i];
         }
         command[i-1] = '\0';
@@ -222,13 +222,13 @@ int main(int argc, char *argv[]) {
         printf("Enter a command: ");
         gets(command);
 
+        // Preserve the command
+        strcpy(temp, command);
+
         // If the user pressed enter, cycle through the loop
         if (command[0] == 0 || command[0] == ' ') {
             continue;
         }
-
-        // Preserve the command
-        strcpy(temp, command);
 
         Tokenize(temp);
         token = toks[0];
