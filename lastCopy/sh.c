@@ -109,7 +109,7 @@ void doRedirect(char *command, int redirectType) {
 
         // Get the command
         for (i = 0; temp[i] != '>'; i++) {
-            cmd[i] = temp[i]
+            cmd[i] = temp[i];
         }
         command[i-1] = '\0';
 
@@ -131,7 +131,7 @@ void doRedirect(char *command, int redirectType) {
 
         // Get the command
         for (i = 0; temp[i] != '>'; i++) {
-            cmd[i] = temp[i]
+            cmd[i] = temp[i];
         }
         command[i-1] = '\0';
 
@@ -153,7 +153,7 @@ void doRedirect(char *command, int redirectType) {
 
         // Get the command
         for (i = 0; temp[i] != '>'; i++) {
-            cmd[i] = temp[i]
+            cmd[i] = temp[i];
         }
         command[i-1] = '\0';
 
